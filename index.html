@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sender</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        #wrapper {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .emailForm {
+            border: 2px solid #000000;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .emailForm input[type="text"],
+        .emailForm input[type="email"],
+        .emailForm input[type="date"],
+        .emailForm select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .dueDateConfirmation {
+            display: none;
+        }
+
+        #btn1 {
+            margin: 10px auto;
+            display: block;
+        }
+
+        #btn2 {
+            margin: 10px auto;
+            display: block;
+            width: 100%;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .emailForm {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <h1>Email Templates Sender</h1>
+        <button id="btn1" onclick="addAnotherForm()">Add another template</button><br><br>
+        <form action="send_email.php" method="post" enctype="multipart/form-data" id="mainForm">
+            <div id="formContainer">
+                <div class="emailForm">
+                    <label for="client_name">Client's Name:</label><br>
+                    <input type="text" name="client_name[]" required><br>
+                    <label for="client_email">Client's Email:</label><br>
+                    <input type="email" name="client_email[]" required><br>
+                    <label for="client_equipment">Client's Equipment:</label><br>
+                    <input type="text" name="client_equipment[]" required><br>
+                    <label for="email_template">Email Template:</label><br>
+                    <select name="email_template[]" required onchange="toggleDueDateConfirmation(this)">
+                        <option value="ready_to_pickup">Ready to Pickup</option>
+                        <option value="returned_confirmation">Returned Confirmation</option>
+                        <option value="due_date_confirmation">Due Date Confirmation</option>
+                        <!-- Add more options if needed -->
+                    </select><br>
+                    <div class="dueDateConfirmation">
+                        <label for="due_date_confirmation">Due Date Confirmation:</label><br>
+                        <input type="radio" name="due_date_confirmation[]" value="Yes" onclick="toggleDueDateInput(this)">
+                        <label for="due_date_yes">Yes</label>
+                        <input type="radio" name="due_date_confirmation[]" value="No" onclick="toggleDueDateInput(this)">
+                        <label for="due_date_no">No</label><br>
+                        <div class="dueDateInput">
+                            <label for="due_date_input">Due Date (if applicable):</label><br>
+                            <input type="date" name="due_date_input[]"><br>
+                        </div>
+                    </div>
+                    <!-- Add delete button -->
+                    <!-- Don't display remove button for the first form -->
+                    <button type="button" onclick="removeForm(this)" style="display: none;">Remove Form</button>
+                </div>
+            </div>
+            <input id="btn2" type="submit" value="Send Email">
+        </form>
+    </div>
+
+    <script>
+        function toggleDueDateConfirmation(select) {
+            var dueDateConfirmationDiv = select.closest('.emailForm').querySelector('.dueDateConfirmation');
+            var dueDateInputDiv = select.closest('.emailForm').querySelector('.dueDateInput');
+
+            if (select.value === "due_date_confirmation") {
+                dueDateConfirmationDiv.style.display = "block";
+            } else {
+                dueDateConfirmationDiv.style.display = "none";
+                dueDateInputDiv.style.display = "none";
+            }
+        }
+
+        function toggleDueDateInput(radio) {
+            var dueDateInputDiv = radio.closest('.dueDateConfirmation').querySelector('.dueDateInput');
+
+            if (radio.value === "Yes") {
+                dueDateInputDiv.style.display = "block";
+            } else {
+                dueDateInputDiv.style.display = "none";
+            }
+        }
+
+        function addAnotherForm() {
+            var formContainer = document.getElementById('formContainer');
+            var emailForm = document.querySelector('.emailForm').cloneNode(true);
+            
+            // Clear input fields
+            emailForm.querySelectorAll('input[type="text"], input[type="email"], input[type="date"]').forEach(function(input) {
+                input.value = '';
+            });
+
+            // Hide any displayed sections
+            emailForm.querySelectorAll('.dueDateConfirmation, .dueDateInput').forEach(function(element) {
+                element.style.display = 'none';
+            });
+
+            // Display remove button for all forms except the first one
+            var removeButtons = emailForm.querySelectorAll('button');
+            if (removeButtons.length > 0) {
+                removeButtons[0].style.display = 'inline-block';
+            }
+
+            formContainer.appendChild(emailForm);
+        }
+
+        // Function to remove a form
+        function removeForm(button) {
+            var formContainer = document.getElementById('formContainer');
+            var formToRemove = button.closest('.emailForm');
+            formContainer.removeChild(formToRemove);
+        }
+    </script>
+</body>
+</html>
