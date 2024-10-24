@@ -18,6 +18,7 @@ I work at the Student Media Center at my college and while trying to implement n
 - HTML
 - CSS
 - JavaScript
+- PHP
 
 ## Getting Started
 
