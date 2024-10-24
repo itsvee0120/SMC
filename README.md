@@ -1,7 +1,7 @@
 
 # Email Sender
 
-I worked at the Student Media Center at my college and while trying to implement new technologies into our daily services, I decided to make a web application that allows users to send personalized email templates to clients based on their information. The application enables multiple client entries and includes options for different email templates, including a confirmation for due dates.
+I work at the Student Media Center at my college and while trying to implement new technologies into our daily services, I decided to make a web application that allows users to send personalized email templates to clients based on their information. The application enables multiple client entries and includes options for different email templates, including a confirmation for due dates.
 
 
 ## Features
