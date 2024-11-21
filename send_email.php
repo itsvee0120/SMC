@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $body = getEmailTemplate($email_template, $client_name, $client_equipment, $due_date);
 
             $headers = array(
-                'From' =>'nscmediacenter@seattlecolleges.edu', // Replace with your email
+                'From' =>'email', // Replace with your email
             );
 
             // Check if all required fields are present and not empty
