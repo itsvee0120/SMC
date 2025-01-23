@@ -25,7 +25,6 @@ I work at the Student Media Center at my college and while trying to implement n
 ### Prerequisites
 
 - A web browser (e.g., Chrome, Firefox, Safari)
-- A server-side script (`send_email.php`) to handle email sending (not included in this project)
 
 ### Installation
 
